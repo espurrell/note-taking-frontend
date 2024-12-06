@@ -8,9 +8,19 @@ export const fetchNotes = async () => {
 };
 
 export const createNote = async (note) => {
-  const response = await axios.post(API_URL, note);
-  return response.data;
+  try {
+    const response = await axios.post(API_URL, note, {
+      headers: {
+        'Content-Type': 'application/json',  // Ensure this header is set
+      },
+    });
+    return response.data;
+  } catch (error) {
+    console.error("Error creating note:", error);
+    throw error;
+  }
 };
+
 
 export const deleteNote = async (id) => {
   await axios.delete(`${API_URL}/${id}`);

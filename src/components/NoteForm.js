@@ -7,10 +7,15 @@ const NoteForm = ({ onNoteAdded }) => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    const newNote = await createNote({ title, content });
-    onNoteAdded(newNote);
-    setTitle('');
-    setContent('');
+    try {
+      console.log('Sending note:', { title, content });
+      const newNote = await createNote({ title, content });
+      console.log('Note created:', newNote);
+      onNoteAdded(newNote); // Notify parent to refresh the note listsetTitle('');
+      setContent('');
+      } catch (error) {
+      console.error('Error creating note:', error);
+    }
   };
 
   return (
@@ -19,6 +24,7 @@ const NoteForm = ({ onNoteAdded }) => {
         <label>Title:</label>
         <input
           type="text"
+          placeholder="Title"
           value={title}
           onChange={(e) => setTitle(e.target.value)}
         />
@@ -26,6 +32,7 @@ const NoteForm = ({ onNoteAdded }) => {
       <div>
         <label>Content:</label>
         <textarea
+          placeholder="Content"
           value={content}
           onChange={(e) => setContent(e.target.value)}
         />
