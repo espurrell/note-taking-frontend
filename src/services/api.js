@@ -31,6 +31,19 @@ export const fetchNoteById = async (id) => {
   }
 };
 
+export const updateNote = async (id, updatedNote) => {
+  try {
+    console.log("Updating note:", id, updatedNote); // Check what's being sent
+    const response = await axios.put(`http://localhost:8080/notes/${id}`, updatedNote);
+    console.log("Updated note response:", response.data); // Check response
+    return response.data;
+  } catch (error) {
+    console.error("Error updating note:", error);
+    throw error;
+  }
+};
+
+
 
 export const deleteNote = async (id) => {
   await axios.delete(`${API_URL}/${id}`);

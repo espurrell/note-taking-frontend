@@ -1,7 +1,6 @@
 import React, { useState } from 'react';
 import { createNote } from '../services/api';
-import { fetchNoteById } from '../services/api'; 
-
+import { fetchNoteById } from '../services/api';
 
 const NoteForm = ({ onNoteAdded }) => {
   const [title, setTitle] = useState('');
@@ -15,10 +14,10 @@ const NoteForm = ({ onNoteAdded }) => {
       console.log('Sending note:', { title, content });
       const newNote = await createNote({ title, content });
       console.log('Note created:', newNote);
-      onNoteAdded(newNote); // Notify parent to refresh the note listsetTitle('');
+      onNoteAdded(newNote); // Notify parent to refresh the note list
       setTitle('');
       setContent('');
-      } catch (error) {
+    } catch (error) {
       console.error('Error creating note:', error);
     }
   };
@@ -38,46 +37,46 @@ const NoteForm = ({ onNoteAdded }) => {
 
   return (
     <div>
-      <form onSubmit={handleSubmit}>
-        <div>
-        <h3>Add New Note</h3>
-          <label>Title:</label>
+      <div className="top-section">
+        <div className="form-container">
+          <h3>Add New Note</h3>
+          <form onSubmit={handleSubmit}>
+            <label>Title:</label>
+            <input
+              type="text"
+              placeholder="Title"
+              value={title}
+              onChange={(e) => setTitle(e.target.value)}
+            />
+            <label>Content:</label>
+            <textarea
+              placeholder="Content"
+              value={content}
+              onChange={(e) => setContent(e.target.value)}
+            />
+            <button type="submit">Add Note</button>
+          </form>
+        </div>
+
+        <div className="search-container">
+          <h3>Search Note by ID</h3>
           <input
             type="text"
-            placeholder="Title"
-            value={title}
-            onChange={(e) => setTitle(e.target.value)}
+            placeholder="Enter Note ID"
+            value={searchId}
+            onChange={(e) => setSearchId(e.target.value)}
           />
+          <button onClick={handleSearch}>Search</button>
         </div>
-        <div>
-          <label>Content:</label>
-          <textarea
-            placeholder="Content"
-            value={content}
-            onChange={(e) => setContent(e.target.value)}
-          />
-        </div>
-        <button type="submit">Add Note</button>
-      </form>
-
-      <div class="IdSearch">
-        <h3>Search Note by ID</h3>
-        <input
-          type="text"
-          placeholder="Enter Note ID"
-          value={searchId}
-          onChange={(e) => setSearchId(e.target.value)}
-        />
-        <button onClick={handleSearch}>Search</button>
       </div>
 
       {searchResult && (
-        <div class="SearchResults">
-        <h4>Search Result:</h4>
-        <p><strong>ID:</strong> {searchResult.id}</p>
-        <p><strong>Title:</strong> {searchResult.title}</p>
-        <p><strong>Content:</strong> {searchResult.content}</p>
-      </div>
+        <div className="SearchResults">
+          <h4>Search Result:</h4>
+          <p><strong>ID:</strong> {searchResult.id}</p>
+          <p><strong>Title:</strong> {searchResult.title}</p>
+          <p><strong>Content:</strong> {searchResult.content}</p>
+        </div>
       )}
     </div>
   );
