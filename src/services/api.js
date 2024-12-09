@@ -21,6 +21,16 @@ export const createNote = async (note) => {
   }
 };
 
+export const fetchNoteById = async (id) => {
+  try {
+    const response = await axios.get(`${API_URL}/${id}`); // Use axios for consistency
+    return response.data;
+  } catch (error) {
+    console.error('Error fetching note by ID:', error);
+    throw error;
+  }
+};
+
 
 export const deleteNote = async (id) => {
   await axios.delete(`${API_URL}/${id}`);
